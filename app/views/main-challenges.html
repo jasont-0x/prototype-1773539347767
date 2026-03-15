@@ -1,0 +1,43 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "What is your main challenge when your baby cries?" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {{ govukBackLink({ text: "Back", href: "javascript:history.back()" }) }}
+
+    {% if errors and errors["main-challenges"] %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: [{ text: errors["main-challenges"], href: "#main-challenges" }]
+    }) }}
+    {% endif %}
+
+    <form method="post" novalidate>
+    {{ govukRadios({
+      name: "main-challenges",
+      fieldset: {
+        legend: {
+          text: "What is your main challenge when your baby cries?",
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--l"
+        }
+      },
+      errorMessage: errors["main-challenges"] if errors else null,
+      value: data["main-challenges"],
+      items: [
+        { value: "the-sound-is-overwhelming", text: "The sound is overwhelming" },
+        { value: "i-feel-anxious-or-panicked", text: "I feel anxious or panicked" },
+        { value: "i-cannot-think-clearly", text: "I cannot think clearly" },
+        { value: "i-want-to-get-away-from-the-noise", text: "I want to get away from the noise" },
+        { value: "all-of-these", text: "All of these" }
+      ]
+    }) }}
+      {{ govukButton({ text: "Continue" }) }}
+    </form>
+
+  </div>
+</div>
+{% endblock %}
