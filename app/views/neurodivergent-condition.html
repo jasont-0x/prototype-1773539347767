@@ -1,0 +1,44 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "Do you have autism, ADHD or another neurodivergent condition?" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {{ govukBackLink({ text: "Back", href: "javascript:history.back()" }) }}
+
+    {% if errors and errors["neurodivergent-condition"] %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: [{ text: errors["neurodivergent-condition"], href: "#neurodivergent-condition" }]
+    }) }}
+    {% endif %}
+
+    <form method="post" novalidate>
+    {{ govukRadios({
+      name: "neurodivergent-condition",
+      fieldset: {
+        legend: {
+          text: "Do you have autism, ADHD or another neurodivergent condition?",
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--l"
+        }
+      },
+      hint: { text: "This includes self-diagnosed conditions. We use this information to personalise your support pack." },
+      errorMessage: errors["neurodivergent-condition"] if errors else null,
+      value: data["neurodivergent-condition"],
+      items: [
+        { value: "yes-i-have-autism", text: "Yes, I have autism" },
+        { value: "yes-i-have-adhd", text: "Yes, I have ADHD" },
+        { value: "yes-i-have-both-autism-and-adhd", text: "Yes, I have both autism and ADHD" },
+        { value: "yes-i-have-another-neurodivergent-condition", text: "Yes, I have another neurodivergent condition" },
+        { value: "no", text: "No" }
+      ]
+    }) }}
+      {{ govukButton({ text: "Continue" }) }}
+    </form>
+
+  </div>
+</div>
+{% endblock %}
