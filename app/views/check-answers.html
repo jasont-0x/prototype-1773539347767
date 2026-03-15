@@ -1,0 +1,79 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "Check your answers before sending" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {{ govukBackLink({ text: "Back", href: "javascript:history.back()" }) }}
+
+    <h1 class="govuk-heading-xl">Check your answers before sending</h1>
+
+    {{ govukSummaryList({
+      rows: [
+      {
+        key: { text: "How old is your baby?" },
+        value: { text: data["baby-age"] if data["baby-age"] else "Not answered" },
+        actions: {
+          items: [{
+            href: "/baby-age",
+            text: "Change",
+            visuallyHiddenText: "how old is your baby?"
+          }]
+        }
+      },
+      {
+        key: { text: "Do you have autism, ADHD or another neurodivergent condition?" },
+        value: { text: data["neurodivergent-condition"] if data["neurodivergent-condition"] else "Not answered" },
+        actions: {
+          items: [{
+            href: "/neurodivergent-condition",
+            text: "Change",
+            visuallyHiddenText: "do you have autism, adhd or another neurodivergent condition?"
+          }]
+        }
+      },
+      {
+        key: { text: "What is your main challenge when your baby cries?" },
+        value: { text: data["main-challenges"] if data["main-challenges"] else "Not answered" },
+        actions: {
+          items: [{
+            href: "/main-challenges",
+            text: "Change",
+            visuallyHiddenText: "what is your main challenge when your baby cries?"
+          }]
+        }
+      },
+      {
+        key: { text: "What type of support would help you most?" },
+        value: { text: data["support-type"] if data["support-type"] else "Not answered" },
+        actions: {
+          items: [{
+            href: "/support-type",
+            text: "Change",
+            visuallyHiddenText: "what type of support would help you most?"
+          }]
+        }
+      },
+      {
+        key: { text: "How would you like to receive your support pack?" },
+        value: { text: data["contact-method"] if data["contact-method"] else "Not answered" },
+        actions: {
+          items: [{
+            href: "/contact-method",
+            text: "Change",
+            visuallyHiddenText: "how would you like to receive your support pack?"
+          }]
+        }
+      }
+      ]
+    }) }}
+
+    <form method="post" novalidate>
+      {{ govukButton({ text: "Confirm and send" }) }}
+    </form>
+
+  </div>
+</div>
+{% endblock %}
