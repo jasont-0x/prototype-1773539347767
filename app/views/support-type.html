@@ -1,0 +1,42 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "What type of support would help you most?" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {{ govukBackLink({ text: "Back", href: "javascript:history.back()" }) }}
+
+    {% if errors and errors["support-type"] %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: [{ text: errors["support-type"], href: "#support-type" }]
+    }) }}
+    {% endif %}
+
+    <form method="post" novalidate>
+    {{ govukRadios({
+      name: "support-type",
+      fieldset: {
+        legend: {
+          text: "What type of support would help you most?",
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--l"
+        }
+      },
+      errorMessage: errors["support-type"] if errors else null,
+      value: data["support-type"],
+      items: [
+        { value: "practical-tips-to-reduce-noise", text: "Practical tips to reduce noise" },
+        { value: "breathing-and-calming-techniques", text: "Breathing and calming techniques" },
+        { value: "understanding-why-babies-cry", text: "Understanding why babies cry" },
+        { value: "all-of-these", text: "All of these" }
+      ]
+    }) }}
+      {{ govukButton({ text: "Continue" }) }}
+    </form>
+
+  </div>
+</div>
+{% endblock %}
